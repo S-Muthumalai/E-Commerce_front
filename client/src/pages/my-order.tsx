@@ -99,7 +99,7 @@ const MyOrders: React.FC = () => {
                           className="flex justify-between text-sm text-gray-600"
                         >
                           <span>
-                            {item.product.name} (x{item.quantity})
+                            {item.name} (x{item.quantity})
                           </span>
                           <span>${(item.price * item.quantity).toFixed(2)}</span>
                         </div>

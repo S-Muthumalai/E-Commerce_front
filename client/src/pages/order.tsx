@@ -156,6 +156,8 @@ const OrderDashboard: React.FC = () => {
                     <Table
                         columns={columns}
                         dataSource={orders}
+                        pagination={{ pageSize: 10 }}
+                        bordered
                         loading={loading}
                         rowKey="id"
                     />

@@ -141,7 +141,7 @@ const AdminUserDashboard: React.FC = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-gradient-to-t from-blue-500 to-blue-50 flex flex-col">
             <Navbar />
 
             <div className="flex flex-1">

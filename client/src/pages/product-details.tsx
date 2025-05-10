@@ -47,8 +47,12 @@ const ProductDetails: React.FC = () => {
         setProduct(response.data);
 
         const similarResponse = await axios.get(
-          `/api/products?category=${response.data.category}&exclude=${numericProductId}`
+          `/api/similar-products/${response.data.category}`
         );
+        similarResponse.data = similarResponse.data.filter((similarProduct: Product) => similarProduct.id !== numericProductId);
+        if (similarResponse.data.length === 0) {
+          throw new Error("No similar products found");
+        }
         setSimilarProducts(similarResponse.data);
       } catch (err: any) {
         console.error("Error fetching product details:", err);
@@ -63,21 +67,16 @@ const ProductDetails: React.FC = () => {
 
   const handleBuyNow = () => {
     if (product) {
-      // Save product details to local storage
       localStorage.setItem("checkoutProduct", JSON.stringify(product));
-      // Redirect to the checkout page
       window.location.href = "/checkout";
     }
   };
-
-  // Calculate the delivery date (one week from today)
   const calculateDeliveryDate = () => {
     const today = new Date();
     const deliveryDate = new Date(today);
     deliveryDate.setDate(today.getDate() + 7); // Add 7 days
-    return deliveryDate.toLocaleDateString(); // Format the date
+    return deliveryDate.toLocaleDateString('en-GB'); // Format the date
   };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -85,7 +84,6 @@ const ProductDetails: React.FC = () => {
       </div>
     );
   }
-
   if (fetchError) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -93,7 +91,6 @@ const ProductDetails: React.FC = () => {
       </div>
     );
   }
-
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -101,7 +98,6 @@ const ProductDetails: React.FC = () => {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
@@ -131,7 +127,7 @@ const ProductDetails: React.FC = () => {
               <div className="w-3/5 h-96 rounded-lg flex flex-col justify-center p-20 relative">
                 <h1 className="text-2xl font-bold text-gray-900 mb-2">{product.name}</h1>
                 <p className="text-gray-700 text-sm mb-4">{product.description}</p>
-                <p className="text-lg font-semibold text-primary">Price: ${product.price.toFixed(2)}</p>
+                <p className="text-lg font-semibold text-primary">Price: ₹{product.price.toFixed(2)}</p>
                 <p className="text-sm text-gray-600 mt-2">
                   <span className="font-medium">Estimated Delivery Date:</span> {calculateDeliveryDate()}
                 </p>
@@ -201,7 +197,7 @@ const ProductDetails: React.FC = () => {
                         <p className="text-sm text-gray-600 mt-1">{product1.description || "No description available."}</p>
                       </Link>
                       <div className="mt-4 flex justify-between items-center">
-                        <span className="text-primary font-bold">${product1.price.toFixed(2)}</span>
+                        <span className="text-primary font-bold">₹{product1.price.toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
@@ -214,5 +210,4 @@ const ProductDetails: React.FC = () => {
     </div>
   );
 };
-
 export default ProductDetails;

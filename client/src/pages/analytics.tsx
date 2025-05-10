@@ -108,7 +108,7 @@ const AnalyticsPage: React.FC = () => {
         color: ["#ff4d4f", "#36cfc9", "#ffc53d", "#73d13d", "#597ef7"],
     };
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-gradient-to-t from-blue-500 to-blue-50 flex flex-col">
             <Navbar />
             <div className="flex flex-1">
                 <Sidebar />
@@ -116,7 +116,7 @@ const AnalyticsPage: React.FC = () => {
                     <Spin spinning={loading}>
                         <div style={{ padding: "20px" }}>
                             <Title level={2} style={{ textAlign: "center", marginBottom: "20px", color: "#001529" }}>
-                                Analytics Dashboard
+                                Admin Dashboard
                             </Title>
 
                             {/* Summary Section */}

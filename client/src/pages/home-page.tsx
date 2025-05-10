@@ -382,7 +382,19 @@ export default function HomePage() {
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold text-gray-900">Product Management</h1>
             <div className="flex items-center gap-2">
-              <button className="px-3 py-2 text-sm bg-white border rounded-md flex items-center gap-1 hover:bg-gray-50">
+                <button
+                className="px-3 py-2 text-sm bg-white border rounded-md flex items-center gap-1 hover:bg-gray-50"
+                onClick={() => {
+                  const dataStr = JSON.stringify(products, null, 2);
+                  const blob = new Blob([dataStr], { type: "application/json" });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement("a");
+                  link.href = url;
+                  link.download = "products.json";
+                  link.click();
+                  URL.revokeObjectURL(url);
+                }}
+                >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -398,7 +410,7 @@ export default function HomePage() {
                   <polyline points="14 2 14 8 20 8" />
                 </svg>
                 Export
-              </button>
+                </button>
               <button
                 onClick={() => {
                   setAddProductOpen(true);

@@ -99,7 +99,7 @@ export function EditProductModal({ isOpen, onClose, product }: EditProductModalP
   const queryClient = useQueryClient();
   
   // Fetch price history
-  const { data: priceHistory = [] } = useQuery({
+  const { data: priceHistory = [] } = useQuery<Array<{ id: string; date: string; price: number }>>({
     queryKey: [`/api/products/${product.id}/price-history`],
     enabled: isOpen,
   });
@@ -107,6 +107,7 @@ export function EditProductModal({ isOpen, onClose, product }: EditProductModalP
   const updateProductMutation = useMutation({
     mutationFn: async (updatedProduct: Partial<InsertProduct>) => {
       const res = await apiRequest("PUT", `/api/products/${product.id}`, updatedProduct);
+      
       return await res.json();
     },
     onSuccess: () => {

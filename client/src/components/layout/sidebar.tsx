@@ -55,6 +55,16 @@ export default function Sidebar() {
   }, []);
   const adminItems = [
     {
+      icon: <LayoutDashboard className="h-5 w-5" />,
+      label: "Dashboard",
+      href: "/"
+    },
+    {
+      icon: <Package className="h-5 w-5" />,
+      label: "Products",
+      href: "/products"
+    },
+    {
       icon: <ShoppingCart className="h-5 w-5" />,
       label: "Orders",
       href: "/orders"
@@ -65,17 +75,17 @@ export default function Sidebar() {
       href: "/customers"
     },
     {
-      icon: <BarChart3 className="h-5 w-5" />,
-      label: "Analytics",
-      href: "/analytics"
-    },
-    {
       icon: <UserCog className="h-5 w-5" />,
       label: "Middleman",
       href: "/middleman"
     }
   ];
   const userItems = [
+    {
+      icon: <LayoutDashboard className="h-5 w-5" />,
+      label: "Dashboard",
+      href: "/customer"
+    },
     {
       icon: <ShoppingCart className="h-5 w-5" />,
       label: `Cart (${cartCount})`, 
@@ -98,13 +108,8 @@ export default function Sidebar() {
     }
   ];
   const commonItems = [
-    {
-      icon: <LayoutDashboard className="h-5 w-5" />,
-      label: "Dashboard",
-      href: "/customer"
-    }
   ];
-  const items = [...commonItems, ...(isAdmin ? adminItems : userItems)];
+  const items = [...(isAdmin ? adminItems : userItems)];
   return (
     <aside className="hidden md:flex flex-col w-64 bg-white border-r p-4 space-y-2">
       <div className="space-y-2">

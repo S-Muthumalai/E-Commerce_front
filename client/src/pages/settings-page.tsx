@@ -53,7 +53,7 @@ export default function SettingsPage() {
   // Update email mutation
   const updateEmailMutation = useMutation({
     mutationFn: async (data: { email: string }) => {
-      const res = await apiRequest("PUT", "/api/user/email", data);
+      const res = await apiRequest("PUT", "api/user/email", data);
       return await res.json();
     },
     onSuccess: () => {

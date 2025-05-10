@@ -1,10 +1,8 @@
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Search, XCircle } from "lucide-react";
-
 interface ProductSearchProps {
   searchQuery: string;
   categoryFilter: string;
@@ -14,17 +12,15 @@ interface ProductSearchProps {
   onStockChange: (value: string) => void;
   onResetFilters: () => void;
 }
-
 const categories = [
   "Electronics",
   "Clothing",
   "Home & Kitchen",
   "Books",
-  "Toys",
-  "Beauty",
-  "Sports"
+  "Sports",
+  "Health",
+  "Outdoor",
 ];
-
 export default function ProductSearch({
   searchQuery,
   categoryFilter,

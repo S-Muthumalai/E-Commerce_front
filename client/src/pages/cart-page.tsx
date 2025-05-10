@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Product } from "@shared/schema";
 import { toast } from "@/hooks/use-toast";
-import { get } from "http";
-import { set } from "date-fns";
 import { useLocation } from "wouter";
 
 type CartItem = {
@@ -86,7 +84,8 @@ export default function CartPage() {
   // Mutation to update the quantity of an item in the cart
   const updateQuantityMutation = useMutation({
     mutationFn: async ({ cartItemId, quantity }: { cartItemId: number; quantity: number }) => {
-      const response = await fetch(`/api/cart/${cartItemId}`, {
+      const response = await fetch(`https://easehope-backend-kb22ts19x-muthumalai-ss-projects.vercel.app"; // Replace with your backend URL
+/cart/${cartItemId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +122,7 @@ export default function CartPage() {
   }
 
   // Handle proceed to checkout
-  const handleProceedToCheckout = () => {;
+  const handleProceedToCheckout = () => {
     localStorage.removeItem("checkoutProduct");
     setLocation("/checkout");
   };
@@ -149,7 +148,7 @@ export default function CartPage() {
               <button
               className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
               onClick={() => removeallItemMutation.mutate()}
-              // disabled={cartItems.length === 0}
+              disabled={cartItems.length === 0}
               >
               Clear Cart
               </button>
@@ -170,7 +169,7 @@ export default function CartPage() {
                     <h2 className="text-lg font-bold text-gray-800">{item.product.name}</h2>
                     <p className="text-sm text-gray-600 mt-1">{item.product.description || "No description available."}</p>
                     <div className="mt-4 flex justify-between items-center">
-                      <span className="text-primary font-bold">${item.product.price.toFixed(2)}</span>
+                      <span className="text-primary font-bold">₹{item.product.price.toFixed(2)}</span>
                       <span className="text-sm text-gray-600">Qty: {item.quantity}</span>
                     </div>
                     <div className="mt-4 flex justify-between items-center">

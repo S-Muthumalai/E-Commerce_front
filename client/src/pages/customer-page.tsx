@@ -175,7 +175,7 @@ export default function CustomerPage() {
                       </div>
                     </Link>
                     <div className="mt-4 p-4 flex justify-between items-center pb-2">
-                      <span className="text-primary font-bold">${product.price.toFixed(2)}</span>
+                      <span className="text-primary font-bold">₹{product.price.toFixed(2)}</span>
                       <Button
                         variant="outline"
                         size="icon"

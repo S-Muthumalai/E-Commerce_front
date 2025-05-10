@@ -10,10 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowDownUp, Pencil, Trash, Eye, Loader2, Heart, Package } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
+
 import { Badge } from "@/components/ui/badge";
 
 interface ProductTableProps {
@@ -28,47 +25,10 @@ interface ProductTableProps {
 export default function ProductTable({
   products,
   isLoading,
-  sortConfig,
   onSort,
   onEdit,
   onDelete,
 }: ProductTableProps) {
-  const { user } = useAuth();
-  const { toast } = useToast();
-
-  // Mutation to add product to wishlist
-  const addToWishlistMutation = useMutation({
-    mutationFn: async (productId: number) => {
-      await apiRequest("POST", "/api/wishlist", { productId });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/wishlist"] });
-      toast({
-        title: "Added to wishlist",
-        description: "The product has been added to your wishlist.",
-      });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: "Error adding to wishlist",
-        description: error.message,
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleAddToWishlist = (productId: number) => {
-    if (user) {
-      addToWishlistMutation.mutate(productId);
-    } else {
-      toast({
-        title: "Authentication required",
-        description: "Please log in to add items to your wishlist",
-        variant: "destructive",
-      });
-    }
-  };
-
   const renderStockBadge = (stock: number) => {
     if (stock === 0) {
       return <Badge variant="destructive" className="w-24 justify-center">Out of Stock</Badge>;
@@ -171,7 +131,7 @@ export default function ProductTable({
                     </TableCell>
                     <TableCell className="font-medium">{product.name}</TableCell>
                     <TableCell>{product.category}</TableCell>
-                    <TableCell>${product.price.toFixed(2)}</TableCell>
+                    <TableCell>₹{product.price.toFixed(2)}</TableCell>
                     <TableCell>{product.stock}</TableCell>
                     <TableCell>
                       {renderStockBadge(product.stock)}
@@ -191,13 +151,6 @@ export default function ProductTable({
                           onClick={() => onDelete(product)}
                         >
                           <Trash className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          onClick={() => onEdit(product)}
-                        >
-                          <Eye className="h-4 w-4" />
                         </Button>
                       </div>
                     </TableCell>

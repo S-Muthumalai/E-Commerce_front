@@ -22,14 +22,13 @@ import OrderDashboard from "./pages/order";
 import AdminUserDashboard from "./pages/customer";
 import AnalyticsPage from "./pages/analytics";
 import MiddlemanPage from "./pages/middleman";
-
 function Router() {
   return (
     <Switch>
-      <ProtectedRoute path="/" component={HomePage} requiredRole="admin" />
+      <ProtectedRoute path="/products" component={HomePage} requiredRole="admin" />
       <ProtectedRoute path="/orders" component={OrderDashboard} requiredRole="admin" />
       <ProtectedRoute path="/customers" component={AdminUserDashboard} requiredRole="admin" />
-      <ProtectedRoute path="/analytics" component={AnalyticsPage} requiredRole="admin" />
+      <ProtectedRoute path="/" component={AnalyticsPage} requiredRole="admin" />
       <ProtectedRoute path="/middleman" component={MiddlemanPage} requiredRole="middleman" />
       <Route path="/customer" component={CustomerPage}/>
       <Route path="/settings" component={SettingsPage} />
@@ -46,7 +45,6 @@ function Router() {
     </Switch>
   );
 }
-
 function App() {
   return (
     <QueryClientProvider client={queryClient}>

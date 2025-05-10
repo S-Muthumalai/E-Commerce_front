@@ -161,7 +161,7 @@ export default function WishlistPage() {
                     <CardTitle className="line-clamp-1">{item.product.name}</CardTitle>
                     <CardDescription className="flex justify-between items-center">
                       <span className="text-gray-500">{item.product.category}</span>
-                      <span className="font-semibold text-lg">${item.product.price.toFixed(2)}</span>
+                      <span className="font-semibold text-lg">₹{item.product.price.toFixed(2)}</span>
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex-1">

@@ -1,0 +1,17 @@
+# filepath: render.yaml
+services:
+  - type: web
+    name: E-Commerce-Backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm run start
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        value: ${DATABASE_URL}
+      - key: ACCOUNT_SID
+        value: ${ACCOUNT_SID}
+      - key: AUTH_TOKEN
+        value: ${AUTH_TOKEN}
+      - key: TWILIO_PHONE_NUMBER
+        value: ${TWILIO_PHONE_NUMBER}

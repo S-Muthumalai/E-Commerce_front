@@ -456,6 +456,31 @@ app.get("/api/Approvedorders", isMiddleman, async (req, res, next) => {
       next(err);
     }
   });
+  app.patch("/api/cart/:productId", async (req, res, next) => {
+    try {
+      console.log("Updating cart item...");
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      const productId = parseInt(req.params.productId, 10);
+      const { quantity } = req.body;
+      if (!quantity || quantity <= 0) {
+        return res.status(400).json({ message: "Valid quantity is required" });
+      }
+      console.log("Product ID:", productId);
+      console.log("Quantity:", quantity);
+      console.log("User ID:", req.user.id);
+      const updatedCartItem = await storage.updateCartItemQuantity(req.user.id, productId, quantity);
+      if (!updatedCartItem) {
+        return res.status(404).json({ message: "Cart item not found" });
+      }
+      console.log("Updated cart item:", updatedCartItem);
+      res.json(updatedCartItem);
+    } catch (err) {
+      next(err);
+    } });
+
+
   app.post("/api/cart", async (req, res, next) => {
     try {
       if (!req.isAuthenticated()) {

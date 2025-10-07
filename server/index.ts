@@ -48,7 +48,7 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
-  server.listen(5000, '127.0.0.1', () => {
+  server.listen(5000, '0.0.0.0', () => {
     log(`serving on port 5000`);
   });
 } )();

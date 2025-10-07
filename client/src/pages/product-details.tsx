@@ -64,7 +64,6 @@ const ProductDetails: React.FC = () => {
 
     fetchProductDetails();
   }, [productId, match]);
-
   const handleBuyNow = () => {
     if (product) {
       localStorage.setItem("checkoutProduct", JSON.stringify(product));

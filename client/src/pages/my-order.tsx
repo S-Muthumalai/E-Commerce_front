@@ -20,9 +20,10 @@ const MyOrders: React.FC = () => {
       try {
         const response = await fetch('/api/orders'); // Replace with your API endpoint
         const data = await response.json();
-        console.log('API response:', data); // Debugging line
+        // console.log('API response:', data); // Debugging line
         if (data && Array.isArray(data)) {
           setOrders(data);
+          // {console.log('Order ID:', data)} {/* Debugging line */}
         } else {
           console.error('Unexpected API response format:', data);
           setOrders([]); // Fallback to an empty array
@@ -58,6 +59,7 @@ const MyOrders: React.FC = () => {
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-bold text-gray-700">
                       Order ID: {order.id}
+                      
                     </h2>
                     <span
                       className={`px-3 py-1 rounded-full text-sm ${
@@ -94,12 +96,14 @@ const MyOrders: React.FC = () => {
                     </h3>
                     <div className="space-y-2">
                       {order.items.map((item, index) => (
+                        
                         <div
                           key={index}
                           className="flex justify-between text-sm text-gray-600"
                         >
                           <span>
-                            {item.name} (x{item.quantity})
+                            
+                            {item.product.name} (x{item.quantity})
                           </span>
                           <span>${(item.price * item.quantity).toFixed(2)}</span>
                         </div>

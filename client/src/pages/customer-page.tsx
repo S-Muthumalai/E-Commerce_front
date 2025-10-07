@@ -4,7 +4,6 @@ import ProductSearch from "@/components/products/product-search";
 import { useState,useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Product as BaseProduct } from "@shared/schema";
-
 interface Product extends BaseProduct {
   isInWishlist?: boolean;
 }

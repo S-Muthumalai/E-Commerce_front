@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Search, XCircle } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 interface ProductSearchProps {
   searchQuery: string;
   categoryFilter: string;
@@ -30,11 +31,13 @@ export default function ProductSearch({
   onStockChange,
   onResetFilters
 }: ProductSearchProps) {
+const {user}=useAuth();
+const clasname= user?.isAdmin ? "grid grid-cols-1 md:grid-cols-4 gap-4" : "grid grid-cols-1 md:grid-cols-3 gap-4";
   return (
     <Card className="mb-6">
       <CardContent className="p-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="space-y-2">
+        <div className={clasname}>
+         <div className="space-y-2">
             {/* <Label htmlFor="search">Search</Label> */}
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -65,8 +68,8 @@ export default function ProductSearch({
             </Select>
           </div>
           
-          <div className="space-y-2">
-            {/* <Label htmlFor="stock">Stock Status</Label> */}
+          {user?.isAdmin && (
+            <div className="space-y-2">
             <Select value={stockFilter} onValueChange={onStockChange}>
               <SelectTrigger id="stock">
                 <SelectValue placeholder="All Stock Status" />
@@ -79,6 +82,7 @@ export default function ProductSearch({
               </SelectContent>
             </Select>
           </div>
+          )}
           
           <div className="flex items-end">
             <Button

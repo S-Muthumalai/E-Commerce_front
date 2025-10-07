@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Product } from "@shared/schema";
 import { toast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import { apiRequest } from "@/lib/queryClient";
 
 type CartItem = {
   id: number;
@@ -50,15 +51,11 @@ export default function CartPage() {
   // Mutation to remove an item from the cart
   const removeItemMutation = useMutation({
     mutationFn: async (cartItemId: number) => {
-      const response = await fetch(`/api/cart/${cartItemId}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to remove item from cart");
-      }
+      console.log("removed item", cartItemId);
+      await apiRequest("DELETE", `/api/cart/${cartItemId}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["/api/cart"]);
+      queryClient.invalidateQueries([`/api/cart/${cartItemId}`]);
     },
   });
 
@@ -84,8 +81,9 @@ export default function CartPage() {
   // Mutation to update the quantity of an item in the cart
   const updateQuantityMutation = useMutation({
     mutationFn: async ({ cartItemId, quantity }: { cartItemId: number; quantity: number }) => {
-      const response = await fetch(`https://easehope-backend-kb22ts19x-muthumalai-ss-projects.vercel.app"; // Replace with your backend URL
-/cart/${cartItemId}`, {
+      console.log("cartItemId", cartItemId);
+      console.log("quantity", quantity);
+      const response = await fetch(`api/cart/${cartItemId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -175,7 +173,7 @@ export default function CartPage() {
                     <div className="mt-4 flex justify-between items-center">
                       <button
                         className="px-3 py-1 bg-red-500 text-white text-sm rounded-md hover:bg-red-600"
-                        onClick={() => removeItemMutation.mutate(item.id)}
+                        onClick={() => removeItemMutation.mutate(item.productId)}
                       >
                         Remove
                       </button>
@@ -183,7 +181,7 @@ export default function CartPage() {
                         <button
                           className="px-2 py-1 bg-gray-200 text-sm rounded-md hover:bg-gray-300"
                           onClick={() =>
-                            updateQuantityMutation.mutate({ cartItemId: item.id, quantity: item.quantity - 1 })
+                            updateQuantityMutation.mutate({ cartItemId: item.productId, quantity: item.quantity - 1 })
                           }
                           disabled={item.quantity <= 1}
                         >
@@ -192,7 +190,7 @@ export default function CartPage() {
                         <button
                           className="px-2 py-1 bg-gray-200 text-sm rounded-md hover:bg-gray-300"
                           onClick={() =>
-                            updateQuantityMutation.mutate({ cartItemId: item.id, quantity: item.quantity + 1 })
+                            updateQuantityMutation.mutate({ cartItemId: item.productId, quantity: item.quantity + 1 })
                           }
                         >
                           +

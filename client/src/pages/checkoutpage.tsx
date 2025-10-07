@@ -208,12 +208,12 @@ const CheckoutPage: React.FC = () => {
                   <span>
                     {item.name} (x{item.quantity})
                   </span>
-                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+                  <span>{(item.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
               <div className="flex justify-between font-bold text-gray-900 mt-4">
                 <span>Total:</span>
-                <span>${calculateTotal()}</span>
+                <span>Rs.{calculateTotal()}</span>
               </div>
             </div>
             <button
@@ -231,5 +231,4 @@ const CheckoutPage: React.FC = () => {
     </div>
   );
 };
-
 export default CheckoutPage;
